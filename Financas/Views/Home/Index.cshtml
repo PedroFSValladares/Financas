@@ -1,0 +1,67 @@
+﻿@model Financas.Models.Conta
+@{
+    ViewData["Title"] = "Minha Conta";
+    ViewData["Style"] = new string[] { "/css/home.css" };
+}
+<div class="row">
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">@Html.DisplayNameFor(x => x.Saldo)</h5>
+                <p class="card-text text-center">@Model.Saldo</p>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">@Html.DisplayNameFor(x => x.TotalDeDespesas)</h5>
+                <p class="card-text text-center">@Model.TotalDeDespesas</p>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">@Html.DisplayNameFor(x => x.BalançoDeSaldoComDespesa)</h5>
+                <p class="card-text text-center">@Model.BalançoDeSaldoComDespesa</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">@Html.DisplayNameFor(x => x.Despesas)</h5>
+        <button class="btn btn-success" asp-controller="Despesa" asp-action="Create">+</button>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(x => x.Despesas.FirstOrDefault().Nome)</th>
+                    <th>@Html.DisplayNameFor(x => x.Despesas.FirstOrDefault().Valor)</th>
+                    <th>@Html.DisplayNameFor(x => x.Despesas.FirstOrDefault().DataCobranca)</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if(Model.Despesas == null) {
+                    <tr>
+                        <td colspan="4" align="center">Não há despesas cadastradas.</td>
+                    </tr>
+                }
+                else {
+                    @foreach(var despesa in Model.Despesas) {
+                        <tr>
+                            <td>@despesa.Nome</td>
+                            <td>@despesa.Valor</td>
+                            <td>@despesa.DataCobranca</td>
+                            <td>
+                                <a class="btn btn-danger" asp-controller="Despesa" asp-action="Delete" asp-route-id="@despesa.Id">X</a>
+                                <a class="btn btn-primary" asp-controller="Despesa" asp-action="Edit" asp-route-id="@despesa.Id">E</a>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

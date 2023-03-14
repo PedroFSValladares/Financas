@@ -22,7 +22,7 @@ namespace Financas.Controllers {
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(Conta conta, [FromForm] string remember) {
+        public async Task<IActionResult> Login(LoginModel conta) {
             var contaQuery = from c in _context.Contas
                              where c.Login == conta.Login
                              select new Conta { Login = c.Login, Senha = c.Senha, Id = c.Id };
@@ -33,29 +33,29 @@ namespace Financas.Controllers {
                 return NotFound("Conta Inexistente.");
             }
 
-            var result = _passwordHasher.VerifyHashedPassword(conta, dbConta.Senha, conta.Senha);
+            var result = _passwordHasher.VerifyHashedPassword(dbConta, dbConta.Senha, conta.Senha);
 
             if(result == PasswordVerificationResult.Failed) {
                 return BadRequest("Login ou senha incorretos.");
             }
 
             if(result == PasswordVerificationResult.SuccessRehashNeeded) {
-                string newHashedPassword = _passwordHasher.HashPassword(conta, conta.Senha);
-                conta.Senha = newHashedPassword;
-                _context.Contas.Update(conta);
+                string newHashedPassword = _passwordHasher.HashPassword(dbConta, conta.Senha);
+                dbConta.Senha = newHashedPassword;
+                _context.Contas.Update(dbConta);
                 _context.SaveChanges();
             }
 
             var claims = new ClaimsIdentity(new Claim[] {
                 new Claim("Id", userId),
-                new Claim(ClaimTypes.NameIdentifier, conta.Login)
+                new Claim(ClaimTypes.NameIdentifier, dbConta.Login)
             }, CookieAuthenticationDefaults.AuthenticationScheme);
 
             string redirectUri = HttpContext.Request.Query["ReturnUrl"];
 
             redirectUri ??= "/";
             var authProperties = new AuthenticationProperties {
-                IsPersistent = remember == "true"
+                IsPersistent = conta.Remember
             };
 
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claims), authProperties);

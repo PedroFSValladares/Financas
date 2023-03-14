@@ -1,8 +1,9 @@
-﻿@model Financas.Models.Conta
+﻿@model Financas.Models.LoginModel
 @{
     ViewData["Title"] = "Login";
 }
-<form class="card m-auto p-2 require-validation" method="post">
+<form asp-controller="Account" asp-action="Login" class="card m-auto p-2 require-validation login" method="post">
+    <span id="server-feedback"></span>
     <div class="mb-3">
         <label class="form-label">Login:</label>
         <input asp-for="Login" type="text" class="form-control required"/>
@@ -18,7 +19,7 @@
         </div>
     </div>
     <div class="form-check">
-        <input class="form-check-input" name="remember" id="checkRemember" value="true" type="checkbox" />
+        <input class="form-check-input" asp-for="Remember" id="checkRemember" value="true" type="checkbox" />
         <label class="form-check-label" for="checkRemember">Lembrar meu login</label> 
     </div>
     <div class="mb-3">

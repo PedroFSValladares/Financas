@@ -32,8 +32,11 @@ if(!app.Environment.IsDevelopment()) {
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
+app.UseDefaultFiles();
 app.UseStaticFiles();
+app.UseDefaultFiles();
+
+app.UseHttpsRedirection();
 
 app.UseRouting();
 

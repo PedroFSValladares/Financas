@@ -12,6 +12,8 @@ namespace Financas.Models {
         public float TotalDeDespesas { get; set; }
         [NotMapped]
         public float BalançoDeSaldoComDespesa { get; set; }
+        [NotMapped]
+        public bool Remember { get; set; }
 
         public List<Transação>? Transacoes { get; set; }
         public List<Despesa>? Despesas { get; set; }

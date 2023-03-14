@@ -6,7 +6,6 @@
     <title>@ViewData["Title"] - Finanças</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Finanças.styles.css" asp-append-version="true" />
     @if(ViewData["Style"] != null) {
         foreach(string pathToStyle in (string[])ViewData["Style"]) {
             <link rel="stylesheet" href="@pathToStyle" />
@@ -53,6 +52,7 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true" type="text/javascript"></script>
+    <script src="~/js/FormValidation.js" asp-append-version="true" type="text/javascript"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

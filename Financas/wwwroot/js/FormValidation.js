@@ -1,4 +1,4 @@
-﻿export default function validateForm() {
+﻿function validateForm() {
     let forms = document.querySelectorAll(".require-validation")
     forms.forEach((form) => {
         let formButton = form.querySelector("button")

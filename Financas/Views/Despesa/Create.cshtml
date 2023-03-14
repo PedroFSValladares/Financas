@@ -1,0 +1,28 @@
+﻿@model Financas.Models.Despesa
+
+<form asp-controller="Despesa" asp-action="Create" class="card m-auto p-2 require-validation" method="post">
+    <div class="mb-3">
+        <label class="form-label">Nome:</label>
+        <input asp-for="Nome" type="text" class="form-control required" />
+        <div class="invalid-feedback">
+            O campo deve ser preenchido.
+        </div>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Valor:</label>
+        <input asp-for="Valor" type="number" class="form-control required" />
+        <div class="invalid-feedback feedback-compare">
+            O campo deve ser preenchido.
+        </div>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Quantidade de Parcelas:</label>
+        <input asp-for="QntdParcelas" type="number" class="form-control required" />
+        <div class="invalid-feedback">
+            O campo deve ser preenchido.
+        </div>
+    </div>
+    <div class="mb-3 d-flex justify-content-center">
+        <input type="submit" class="btn btn-primary w-50" value="Adcionar" />
+    </div>
+</form>

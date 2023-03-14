@@ -6,3 +6,10 @@ button{
     float: right;
 }
 
+.janela{
+    position: absolute;
+    background-color: white;
+    width: 50%;
+    top: 25%;
+    left: 25%;
+}

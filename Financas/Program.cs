@@ -18,8 +18,8 @@ builder.Services.AddScoped<PasswordHasher<Conta>>();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options => {
         options.Cookie.Name = "ASPAUTHSESSION";
-        options.LoginPath = "/Home/Login";
-        options.LogoutPath = "/Home/Logout";
+        options.LoginPath = "/Account/Login";
+        options.LogoutPath = "/Account/Logout";
         options.AccessDeniedPath = "/Home/Forbidden";
     });
 

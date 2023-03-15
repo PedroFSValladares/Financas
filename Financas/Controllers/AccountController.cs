@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using System.Text;
+using Newtonsoft.Json;
 
 namespace Financas.Controllers {
     public class AccountController : Controller {
@@ -17,21 +19,25 @@ namespace Financas.Controllers {
             _passwordHasher = passwordHasher;
         }
 
-        public async Task<IActionResult> Login() {
+        public IActionResult Login() {
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(LoginModel conta) {
+        [Route("Account/Login")]
+        public async Task<IActionResult> LoginPost() {
+            string bodyJson = Encoding.UTF8.GetString(HttpContext.Request.BodyReader.ReadAsync().Result.Buffer);
+            var conta = JsonConvert.DeserializeObject<LoginModel>(bodyJson);
             var contaQuery = from c in _context.Contas
                              where c.Login == conta.Login
                              select new Conta { Login = c.Login, Senha = c.Senha, Id = c.Id };
             var dbConta = contaQuery.FirstOrDefault();
-            string userId = Convert.ToString(dbConta.Id);
 
             if(dbConta == null) {
                 return NotFound("Conta Inexistente.");
             }
+
+            string userId = Convert.ToString(dbConta.Id);
 
             var result = _passwordHasher.VerifyHashedPassword(dbConta, dbConta.Senha, conta.Senha);
 
